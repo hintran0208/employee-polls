@@ -32,7 +32,10 @@ const Login = ({ dispatch, loggedIn }) => {
 
   return (
     <div className="flex justify-center">
-      <img src="https://t3.ftcdn.net/jpg/02/90/83/56/360_F_290835671_jFAkOJOyejt4uZ0b7NvZtoNlD92L7cHh.jpg" />
+      <img
+        src="https://t3.ftcdn.net/jpg/02/90/83/56/360_F_290835671_jFAkOJOyejt4uZ0b7NvZtoNlD92L7cHh.jpg"
+        alt="avatar"
+      />
 
       <div className="flex flex-col mx-8 justify-center items-center">
         <h1 className="text-3xl font-bold mt-9 mb-4" data-testid="login-heading">
