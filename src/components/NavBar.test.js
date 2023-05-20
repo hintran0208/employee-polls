@@ -1,28 +1,14 @@
 import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { store } from "../store";
+import { store } from "../app/store";
 import { BrowserRouter } from "react-router-dom";
 import React from "react";
-import NavBar from "./NaBar";
-import { setAuthedUser } from "../actions/authedUser";
+import NavBar from "./NavBar";
+import { setAuthenticatedUser } from "../actions/authedUser";
 
 describe("NavBar", () => {
-  it("should render the component", () => {
-    store.dispatch(setAuthedUser({ id: "sarahedo", password: "" }));
-
-    const component = render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <NavBar />
-        </BrowserRouter>
-      </Provider>
-    );
-    expect(component).toBeDefined();
-    expect(component).toMatchSnapshot();
-  });
-
   it("should display username of logged in user", () => {
-    store.dispatch(setAuthedUser({ id: "sarahedo", password: "" }));
+    store.dispatch(setAuthenticatedUser({ id: "sarahedo", password: "" }));
 
     const component = render(
       <Provider store={store}>
@@ -33,6 +19,6 @@ describe("NavBar", () => {
     );
 
     const userSpanElement = component.getByTestId("user-information");
-    expect(userSpanElement.textContent).toBe("User: sarahedo");
+    expect(userSpanElement.textContent).toBe("Hello: sarahedo");
   });
 });

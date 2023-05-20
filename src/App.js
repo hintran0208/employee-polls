@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import { Route, Routes } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
+import HomePage from "./components/HomePage";
 import NewPoll from "./components/NewPoll";
 import PollListPage from "./components/PollListPage";
 import { connect } from "react-redux";
@@ -26,7 +26,7 @@ function App({ dispatch, loggedIn }) {
           path="/"
           element={
             <PrivateRoute>
-              <Dashboard />
+              <HomePage />
             </PrivateRoute>
           }
         />
