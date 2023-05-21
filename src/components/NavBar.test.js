@@ -1,24 +1,24 @@
-import { render } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
+import { render, screen } from "@testing-library/react";
+import * as React from "react";
 import { Provider } from "react-redux";
-import { store } from "../app/store";
-import { BrowserRouter } from "react-router-dom";
-import React from "react";
-import NavBar from "./NavBar";
-import { setAuthenticatedUser } from "../actions/authedUser";
+import Navbar from "../components/Navbar";
+import store from "../store";
 
 describe("NavBar", () => {
-  it("should display username of logged in user", () => {
-    store.dispatch(setAuthenticatedUser({ id: "sarahedo", password: "" }));
-
-    const component = render(
+  test("should be rendered the page correctly", async () => {
+    render(
       <Provider store={store}>
-        <BrowserRouter>
-          <NavBar />
-        </BrowserRouter>
+        <Navbar />
       </Provider>
     );
 
-    const userSpanElement = component.getByTestId("user-information");
-    expect(userSpanElement.textContent).toBe("Hello: sarahedo");
+    const homePageLink = screen.getByText(/home/i);
+    const newPollLink = screen.getByText(/new/i);
+    const leaderboardLink = screen.getByText(/leaderboard/i);
+
+    expect(homePageLink).toBeInTheDocument();
+    expect(newPollLink).toBeInTheDocument();
+    expect(leaderboardLink).toBeInTheDocument();
   });
 });

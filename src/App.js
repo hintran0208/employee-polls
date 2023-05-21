@@ -1,69 +1,46 @@
-import React, { useEffect } from "react";
-import "./App.css";
-import NavBar from "./components/NavBar";
+import React, { Fragment, useEffect } from "react";
+import { connect } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { handleInitialData } from "./actions/shared";
+import Error404 from "./components/404";
 import HomePage from "./components/HomePage";
+import Leaderboard from "./components/Leaderboard";
+import Login from "./components/Login";
+import NavBar from "./components/NavBar";
 import NewPoll from "./components/NewPoll";
 import PollListPage from "./components/PollListPage";
-import { connect } from "react-redux";
-import Login from "./components/Login";
-import { handleInitialData } from "./actions/shared";
-import Leaderboard from "./components/Leaderboard";
-import Error404 from "./components/404";
-import PrivateRoute from "./components/PrivateRoute";
 
-function App({ dispatch, loggedIn }) {
+const App = ({ authorizedUser, dispatch }) => {
   useEffect(() => {
     dispatch(handleInitialData());
-  });
+  }, [dispatch]);
 
   return (
-    <div className="container mx-auto py-4">
-      {loggedIn && <NavBar />}
-      <Routes>
-        <Route path="/login" exact element={<Login />} />
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <HomePage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/leaderboard"
-          exact
-          element={
-            <PrivateRoute>
-              <Leaderboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/questions/:id"
-          element={
-            <PrivateRoute>
-              <PollListPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/new"
-          exact
-          element={
-            <PrivateRoute>
-              <NewPoll />
-            </PrivateRoute>
-          }
-        />
-        <Route path="/404" exact element={<Error404 />} />
-      </Routes>
-    </div>
+    <Fragment>
+      <NavBar />
+      <div className="container mx-auto py-6">
+        <Routes>
+          {authorizedUser ? (
+            <Fragment>
+              <Route path="/" element={<HomePage />} exact />
+              <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/new" element={<NewPoll />} />
+              <Route path="/questions/:id" element={<PollListPage />} />
+              <Route path="/404" element={<Error404 />} />
+            </Fragment>
+          ) : (
+            <Fragment>
+              <Route path="*" element={<Login />} />
+            </Fragment>
+          )}
+        </Routes>
+      </div>
+    </Fragment>
   );
-}
+};
 
 const mapStateToProps = ({ authedUser }) => ({
-  loggedIn: !!authedUser,
+  authorizedUser: authedUser !== null,
 });
 
 export default connect(mapStateToProps)(App);

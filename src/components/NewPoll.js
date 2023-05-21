@@ -1,71 +1,52 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { handleAddQuestion } from "../actions/questions";
+import { handleAddNewQuestion } from "../actions/shared";
 
 const NewPoll = ({ dispatch }) => {
   const navigate = useNavigate();
-  const [firstOption, setFirstOption] = useState("");
-  const [secondOption, setSecondOption] = useState("");
 
-  const handleFirstOptionChange = (e) => {
-    const value = e.target.value;
-    setFirstOption(value);
-  };
-
-  const handleSecondOptionChange = (e) => {
-    const value = e.target.value;
-    setSecondOption(value);
-  };
+  const [firstVote, setFirstVote] = useState("");
+  const [secondVote, setSecondVote] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(handleAddQuestion(firstOption, secondOption));
+    dispatch(handleAddNewQuestion(firstVote, secondVote));
     navigate("/");
   };
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mt-9">New Poll</h1>
+      <h1 className="text-3xl font-bold mt-9 text-center">Add New Question</h1>
       <form onSubmit={handleSubmit}>
         <div className="mt-3">
-          <label
-            htmlFor="firstOption"
-            data-testid="firstOptionLabel"
-            className="block text-sm font-medium text-slate-700"
-          >
+          <label htmlFor="firstVote" className="font-medium text-slate-700 block text-sm ">
             First Option
           </label>
-          <div className="mt-1">
+          <div className="mt-2">
             <input
-              value={firstOption}
-              onChange={handleFirstOptionChange}
+              value={firstVote}
+              onChange={(e) => setFirstVote(e.target.value)}
               type="text"
-              name="firstOption"
-              id="firstOption"
-              data-testid="firstOption"
-              className="px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:shadow-none"
+              name="firstVote"
+              id="firstVote"
+              className="px-4 py-3 border-slate-300 placeholder-slate-400  disabled:bg-slate-50 bg-white border shadow-sm  disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:shadow-none"
             />
           </div>
         </div>
 
-        <div className="mt-3">
-          <label
-            htmlFor="secondOption"
-            data-testid="secondOptionLabel"
-            className="block text-sm font-medium text-slate-700"
-          >
+        <div className="mt-4">
+          <label htmlFor="secondVote" className="font-medium text-slate-700 block text-sm ">
             Second Option
           </label>
           <div className="mt-1">
             <input
-              value={secondOption}
-              onChange={handleSecondOptionChange}
+              value={secondVote}
+              onChange={(e) => setSecondVote(e.target.value)}
               type="text"
-              name="secondOption"
-              id="secondOption"
-              data-testid="secondOption"
-              className="px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:shadow-none"
+              name="secondVote"
+              id="secondVote"
+              className="px-4 py-3 placeholder-slate-400  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 bg-white border shadow-sm border-slate-300  focus:invalid:ring-pink-500 disabled:shadow-none"
             />
           </div>
         </div>
@@ -73,8 +54,7 @@ const NewPoll = ({ dispatch }) => {
         <div className="mt-6 text-right">
           <button
             type="submit"
-            data-testid="submit-poll"
-            className="bg-sky-500 hover:bg-sky-700 px-5 py-2.5 text-sm leading-5 rounded-md font-semibold text-white"
+            className="w-full text-white bg-sky-500 rounded-md font-semibold hover:bg-sky-700 px-5 py-2.5 text-sm leading-5  "
           >
             Submit
           </button>

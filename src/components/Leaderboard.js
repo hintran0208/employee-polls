@@ -3,34 +3,30 @@ import { connect } from "react-redux";
 const Leaderboard = ({ users }) => {
   return (
     <div>
-      <h1 className="text-3xl font-bold mt-9">Leaderboard</h1>
-
-      <table className="border-collapse table-auto w-full text-sm mt-6">
+      <table className="w-full text-sm mt-12 border-collapse table-auto ">
         <thead className="table-header-group">
           <tr className="table-row">
-            <th className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+            <th className="text-slate-400 dark:text-slate-200 text-left border-b dark:border-slate-600 font-medium p-5 pl-10    ">
               User
             </th>
-            <th className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
-              Answered
+            <th className="text-slate-400 dark:text-slate-200 text-left border-b dark:border-slate-600 font-medium p-5 pl-10    ">
+              Answered Total
             </th>
-            <th className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
-              Created
+            <th className="text-slate-400 dark:text-slate-200 text-left border-b dark:border-slate-600 font-medium p-5 pl-10   ">
+              Created Total
             </th>
           </tr>
         </thead>
         <tbody className="bg-white dark:bg-slate-800">
           {users.map((user) => (
             <tr key={user.id}>
-              <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+              <td className="text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700 p-5 pl-10 ">
                 <span className="font-bold">{user.name}</span>
-                <br />
-                {user.id}
               </td>
-              <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+              <td className="text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700 p-5 pl-10">
                 {Object.keys(user.answers).length}
               </td>
-              <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+              <td className="text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700 p-5 pl-10 ">
                 {user.questions.length}
               </td>
             </tr>

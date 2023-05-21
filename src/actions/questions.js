@@ -1,50 +1,35 @@
-import { saveQuestion, saveQuestionAnswer } from "../utils/api";
-import { addAnswerUser, addQuestionUser } from "./users";
+const ADD_NEW_QUESTION = "ADD_NEW_QUESTION";
+const SAVE_ANSWER_VOTE = "SAVE_ANSWER_VOTE";
+const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
 
-export const ADD_QUESTION = "ADD_QUESTION";
-export const ADD_ANSWER_QUESTION = "ADD_ANSWER_QUESTION";
-export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
-
-export function receiveQuestions(questions) {
+const receiveQuestions = (questions) => {
   return {
     type: RECEIVE_QUESTIONS,
     questions,
   };
-}
+};
 
-function addQuestion(question) {
+const saveAnswerVote = (author, qid, answer) => {
   return {
-    type: ADD_QUESTION,
-    question,
-  };
-}
-
-function addAnswerQuestion(author, qid, answer) {
-  return {
-    type: ADD_ANSWER_QUESTION,
+    type: SAVE_ANSWER_VOTE,
     author,
     qid,
     answer,
   };
-}
+};
 
-export function handleAddQuestion(firstOption, secondOption) {
-  return (dispatch, getState) => {
-    const { authedUser } = getState();
-
-    return saveQuestion(firstOption, secondOption, authedUser).then((question) => {
-      dispatch(addQuestion(question));
-      dispatch(addQuestionUser(question));
-    });
+const addQuestion = (question) => {
+  return {
+    type: ADD_NEW_QUESTION,
+    question,
   };
-}
+};
 
-export function handleAddAnswer(questionId, answer) {
-  return (dispatch, getState) => {
-    const { authedUser } = getState();
-    return saveQuestionAnswer(authedUser.id, questionId, answer).then(() => {
-      dispatch(addAnswerQuestion(authedUser.id, questionId, answer));
-      dispatch(addAnswerUser(authedUser.id, questionId, answer));
-    });
-  };
-}
+export {
+  ADD_NEW_QUESTION,
+  RECEIVE_QUESTIONS,
+  SAVE_ANSWER_VOTE,
+  addQuestion,
+  receiveQuestions,
+  saveAnswerVote,
+};

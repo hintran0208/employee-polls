@@ -1,21 +1,22 @@
-import React from "react";
-import { render } from "@testing-library/react";
+import * as React from "react";
 import App from "./App";
+import { render, fireEvent, screen } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
+import { MemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "../src/app/store";
-import { BrowserRouter } from "react-router-dom";
-import { setAuthenticatedUser } from "./actions/authedUser";
+import store from "./store";
 
 describe("App", () => {
-  it("should render the component", () => {
-    const component = render(
-      <Provider store={store}>
-        <BrowserRouter>
+  test("should be render login form", async () => {
+    render(
+      <MemoryRouter>
+        <Provider store={store}>
           <App />
-        </BrowserRouter>
-      </Provider>
+        </Provider>
+      </MemoryRouter>
     );
-    expect(component).toBeDefined();
-    expect(component).toMatchSnapshot();
+
+    const loginHeading = screen.getByText(/login/i);
+    expect(loginHeading).toBeInTheDocument();
   });
 });

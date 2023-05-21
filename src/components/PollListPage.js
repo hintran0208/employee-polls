@@ -1,87 +1,77 @@
 import { connect } from "react-redux";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { handleAddAnswer } from "../actions/questions";
+import { useNavigate, useParams } from "react-router-dom";
+import { handleAddVote } from "../actions/shared";
 
-const PollPage = ({ dispatch, authedUser, question, author }) => {
+const PollPage = ({ dispatch, authedUser, question, createdUser }) => {
   const navigate = useNavigate();
 
-  if (!authedUser || !question || !author) {
-    return <Navigate to="/404" />;
-  }
+  const isFirstVoted = question.optionOne.votes.includes(authedUser.id);
+  const isSecondVoted = question.optionTwo.votes.includes(authedUser.id);
+  const isVoted = isFirstVoted || isSecondVoted;
 
-  const hasVotedForOptionOne = question.optionOne.votes.includes(authedUser.id);
-  const hasVotedForOptionTwo = question.optionTwo.votes.includes(authedUser.id);
-  const hasVoted = hasVotedForOptionOne || hasVotedForOptionTwo;
-
-  const handleOptionOne = (e) => {
+  const handleFirstVoted = (e) => {
     e.preventDefault();
-    dispatch(handleAddAnswer(question.id, "optionOne"));
+    dispatch(handleAddVote(question.id, "optionOne"));
     navigate("/");
   };
 
-  const handleOptionTwo = (e) => {
+  const handleSecondVoted = (e) => {
     e.preventDefault();
-    dispatch(handleAddAnswer(question.id, "optionTwo"));
+    dispatch(handleAddVote(question.id, "optionTwo"));
     navigate("/");
   };
 
-  const calcPercentage = (option, question) => {
-    const numberVotesTotal = question.optionOne.votes.length + question.optionTwo.votes.length;
-    switch (option) {
-      case "optionOne":
-        return (question.optionOne.votes.length / numberVotesTotal) * 100 + " %";
-      case "optionTwo":
-        return (question.optionTwo.votes.length / numberVotesTotal) * 100 + " %";
-      default:
-        return "";
-    }
-  };
+  const firstVote = question.optionOne.votes.length;
+  const secondVote = question.optionTwo.votes.length;
+  const total = firstVote + secondVote;
+  const firstVotePercentage = Math.round(100 * (firstVote / total)) + " %";
+  const secondVotePercentage = Math.round(100 * (secondVote / total)) + " %";
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mt-9">Poll by {author.id}</h1>
+      <h1 className="mt-12 text-center text-xl font-bold ">Created by {createdUser?.id}</h1>
 
-      <div className="flex justify-center">
-        <img src={author.avatarURL} alt="Profile" className="h-24 w-24 rounded-full" />
+      <div className="flex justify-center mt-10">
+        <img src={createdUser?.avatarURL} alt="Profile" className="h-24 w-24 rounded-full" />
       </div>
 
       <div className="flex justify-center">
-        <h2 className="text-2xl font-bold mt-6">Would you rather?</h2>
+        <h2 className="mt-6 mb-10 text-2xl font-bold ">What is your answer?</h2>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mt-4">
+      <div className="gap-4 mt-4 grid grid-cols-2 ">
         <button
-          onClick={handleOptionOne}
-          disabled={hasVoted}
+          onClick={handleFirstVoted}
+          disabled={isVoted}
           className={
             "p-2 rounded-xl bg-zinc-100 hover:shadow-xl transition " +
-            (hasVotedForOptionOne ? "bg-lime-400" : "")
+            (isFirstVoted ? "bg-lime-400" : "")
           }
         >
-          <div className={hasVotedForOptionOne ? "chosen" : ""}>
+          <div className={isFirstVoted ? "chosen" : ""}>
             <p className="font-bold mb-2">{question.optionOne.text}</p>
-            {!hasVoted && <p className="underline underline-offset-4 mb-3">Click</p>}
-            {hasVoted && (
+            {!isVoted && <p className="underline-offset-4 mb-3  ">Choose</p>}
+            {isVoted && (
               <p className="text-xs">
-                Votes: {question.optionOne.votes.length} ({calcPercentage("optionOne", question)})
+                Votes: {question.optionOne.votes.length} ({firstVotePercentage})
               </p>
             )}
           </div>
         </button>
 
         <button
-          onClick={handleOptionTwo}
-          disabled={hasVoted}
+          onClick={handleSecondVoted}
+          disabled={isVoted}
           className={
             "p-2 rounded-xl bg-zinc-100 hover:shadow-xl transition " +
-            (hasVotedForOptionTwo ? "bg-lime-400" : "")
+            (isSecondVoted ? "bg-lime-400" : "")
           }
         >
           <p className="font-bold mb-2">{question.optionTwo.text}</p>
-          {!hasVoted && <p className="underline underline-offset-4 mb-3">Click</p>}
-          {hasVoted && (
+          {!isVoted && <p className="underline-offset-4 mb-3  ">Choose</p>}
+          {isVoted && (
             <p className="text-xs">
-              Votes: {question.optionTwo.votes.length} ({calcPercentage("optionTwo", question)})
+              Votes: {question.optionTwo.votes.length} ({secondVotePercentage})
             </p>
           )}
         </button>
@@ -93,11 +83,10 @@ const PollPage = ({ dispatch, authedUser, question, author }) => {
 const mapStateToProps = ({ authedUser, users, questions }) => {
   try {
     const question = Object.values(questions).find((question) => question.id === useParams().id);
-    const author = Object.values(users).find((user) => user.id === question.author);
-    return { authedUser, question, author };
-  } catch (e) {
-    return <Navigate to="/404" />;
-    // throw new Error(`Question or user is not found.\n ${e}`);
+    const createdUser = Object.values(users).find((user) => user.id === question.author);
+    return { authedUser, question, createdUser };
+  } catch (error) {
+    console.log("Error", error);
   }
 };
 
