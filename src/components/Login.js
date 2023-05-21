@@ -1,27 +1,10 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { Navigate } from "react-router-dom";
 import { setAuthenticatedUser } from "../actions/authenUser";
 
 const Login = ({ dispatch, authorizedUser }) => {
   const [username, setUsername] = useState("sarahedo");
   const [password, setPassword] = useState("password123");
-
-  if (authorizedUser) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const redirectUrl = urlParams.get("redirectTo");
-    return <Navigate to={redirectUrl ? redirectUrl : "/"} />;
-  }
-
-  const handleUsernameChange = (e) => {
-    const value = e.target.value;
-    setUsername(value);
-  };
-
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-  };
 
   const handleUserLogin = (username, password) => {
     return (dispatch, getState) => {
@@ -45,53 +28,66 @@ const Login = ({ dispatch, authorizedUser }) => {
   };
 
   return (
-    <div className="flex justify-center">
-      <img
-        src="https://t3.ftcdn.net/jpg/02/90/83/56/360_F_290835671_jFAkOJOyejt4uZ0b7NvZtoNlD92L7cHh.jpg"
-        alt="avatar"
-      />
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <img
+          className="mx-auto w-auto"
+          src="https://t3.ftcdn.net/jpg/02/90/83/56/360_F_290835671_jFAkOJOyejt4uZ0b7NvZtoNlD92L7cHh.jpg"
+          alt="Your Company"
+        />
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          Sign in to your account
+        </h2>
+      </div>
 
-      <div className="flex flex-col mx-8 justify-center items-center">
-        <h1 className="text-3xl font-bold mt-9 mb-4">Login</h1>
-        <form onSubmit={handleSubmit}>
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-slate-700">
+            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
               Username
             </label>
-            <div className="mt-1">
+            <div className="mt-2">
               <input
-                className="px-4 py-4 placeholder-slate-400  disabled:bg-slate-50 disabled:text-slate-500  bg-white border shadow-sm border-slate-300  disabled:border-slate-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:shadow-none"
-                value={username}
-                onChange={handleUsernameChange}
-                type="text"
-                name="username"
                 id="username"
-                data-testid="username"
+                name="username"
+                type="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
-          <div className="mt-6">
-            <label htmlFor="password" className="font-medium text-slate-700 block text-sm ">
-              Password
-            </label>
-            <div className="mt-1">
+
+          <div>
+            <div className="flex items-center justify-between">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Password
+              </label>
+            </div>
+            <div className="mt-2">
               <input
-                className="px-4 py-4 placeholder-slate-400  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:shadow-none bg-white border shadow-sm border-slate-300 "
-                value={password}
-                onChange={handlePasswordChange}
-                type="password"
-                name="password"
                 id="password"
-                data-testid="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
-          <div className="mt-6 text-right">
+
+          <div>
             <button
-              className="px-20 py-2 bg-sky-500 hover:bg-sky-700 px-5 py-2.5 text-sm leading-5 rounded-md font-semibold text-white"
               type="submit"
+              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Login
+              Sign in
             </button>
           </div>
         </form>
