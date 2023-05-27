@@ -17,44 +17,46 @@ const NewPoll = ({ dispatch }) => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mt-9 text-center">Add New Question</h1>
+      <h1 className="m-8 text-2xl font-bold text-center">Add New Question</h1>
       <form onSubmit={handleSubmit}>
-        <div className="mt-3">
-          <label htmlFor="firstVote" className="font-medium text-slate-700 block text-sm ">
+        <div className="relative mb-3">
+          <input
+            name="firstVote"
+            id="firstVote"
+            type="text"
+            className="peer m-0 block h-[58px] w-full rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-4 text-base font-normal leading-tight text-neutral-700 transition duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:outline-none peer-focus:text-primary dark:border-neutral-600 dark:text-neutral-200 dark:focus:border-primary dark:peer-focus:text-primary [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem]"
+            value={firstVote}
+            onChange={(e) => setFirstVote(e.target.value)}
+          />
+          <label
+            htmlFor="firstVote"
+            className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+          >
             First Option
           </label>
-          <div className="mt-2">
-            <input
-              value={firstVote}
-              onChange={(e) => setFirstVote(e.target.value)}
-              type="text"
-              name="firstVote"
-              id="firstVote"
-              className="px-4 py-3 border-slate-300 placeholder-slate-400  disabled:bg-slate-50 bg-white border shadow-sm  disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:shadow-none"
-            />
-          </div>
         </div>
 
-        <div className="mt-4">
-          <label htmlFor="secondVote" className="font-medium text-slate-700 block text-sm ">
+        <div className="relative mb-3">
+          <input
+            name="secondVote"
+            id="secondVote"
+            type="text"
+            className="peer m-0 block h-[58px] w-full rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-4 text-base font-normal leading-tight text-neutral-700 transition duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:shadow-te-primary focus:outline-none peer-focus:text-primary dark:border-neutral-600 dark:text-neutral-200 dark:focus:border-primary dark:peer-focus:text-primary [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem]"
+            value={secondVote}
+            onChange={(e) => setSecondVote(e.target.value)}
+          />
+          <label
+            htmlFor="secondVote"
+            className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+          >
             Second Option
           </label>
-          <div className="mt-1">
-            <input
-              value={secondVote}
-              onChange={(e) => setSecondVote(e.target.value)}
-              type="text"
-              name="secondVote"
-              id="secondVote"
-              className="px-4 py-3 placeholder-slate-400  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 bg-white border shadow-sm border-slate-300  focus:invalid:ring-pink-500 disabled:shadow-none"
-            />
-          </div>
         </div>
 
-        <div className="mt-6 text-right">
+        <div className="mt-8">
           <button
             type="submit"
-            className="w-full text-white bg-sky-500 rounded-md font-semibold hover:bg-sky-700 px-5 py-2.5 text-sm leading-5  "
+            className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
             Submit
           </button>

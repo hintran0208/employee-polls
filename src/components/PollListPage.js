@@ -5,20 +5,28 @@ import { handleAddVote } from "../actions/shared";
 const PollPage = ({ dispatch, authedUser, question, createdUser }) => {
   const navigate = useNavigate();
 
-  const isFirstVoted = question.optionOne.votes.includes(authedUser.id);
-  const isSecondVoted = question.optionTwo.votes.includes(authedUser.id);
+  const isFirstVoted = question.optionOne.votes.indexOf(authedUser.id) !== -1;
+  const isSecondVoted = question.optionTwo.votes.indexOf(authedUser.id) !== -1;
   const isVoted = isFirstVoted || isSecondVoted;
 
   const handleFirstVoted = (e) => {
-    e.preventDefault();
-    dispatch(handleAddVote(question.id, "optionOne"));
-    navigate("/");
+    try {
+      e.preventDefault();
+      dispatch(handleAddVote(question.id, "optionOne"));
+      navigate("/");
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
 
   const handleSecondVoted = (e) => {
-    e.preventDefault();
-    dispatch(handleAddVote(question.id, "optionTwo"));
-    navigate("/");
+    try {
+      e.preventDefault();
+      dispatch(handleAddVote(question.id, "optionTwo"));
+      navigate("/");
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
 
   const firstVote = question.optionOne.votes.length;
@@ -36,21 +44,17 @@ const PollPage = ({ dispatch, authedUser, question, createdUser }) => {
       </div>
 
       <div className="flex justify-center">
-        <h2 className="mt-6 mb-10 text-2xl font-bold ">What is your answer?</h2>
+        <h2 className="mt-6 mb-10 text-4xl font-bold ">What is your answer?</h2>
       </div>
 
       <div className="gap-4 mt-4 grid grid-cols-2 ">
         <button
           onClick={handleFirstVoted}
           disabled={isVoted}
-          className={
-            "p-2 rounded-xl bg-zinc-100 hover:shadow-xl transition " +
-            (isFirstVoted ? "bg-lime-400" : "")
-          }
+          className="block w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
         >
-          <div className={isFirstVoted ? "chosen" : ""}>
-            <p className="font-bold mb-2">{question.optionOne.text}</p>
-            {!isVoted && <p className="underline-offset-4 mb-3  ">Choose</p>}
+          <div className="font-normal text-gray-700 dark:text-gray-400">
+            {question.optionOne.text}
             {isVoted && (
               <p className="text-xs">
                 Votes: {question.optionOne.votes.length} ({firstVotePercentage})
@@ -62,18 +66,16 @@ const PollPage = ({ dispatch, authedUser, question, createdUser }) => {
         <button
           onClick={handleSecondVoted}
           disabled={isVoted}
-          className={
-            "p-2 rounded-xl bg-zinc-100 hover:shadow-xl transition " +
-            (isSecondVoted ? "bg-lime-400" : "")
-          }
+          className="block w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
         >
-          <p className="font-bold mb-2">{question.optionTwo.text}</p>
-          {!isVoted && <p className="underline-offset-4 mb-3  ">Choose</p>}
-          {isVoted && (
-            <p className="text-xs">
-              Votes: {question.optionTwo.votes.length} ({secondVotePercentage})
-            </p>
-          )}
+          <div className="font-normal text-gray-700 dark:text-gray-400">
+            {question.optionTwo.text}
+            {isVoted && (
+              <p className="text-xs">
+                Votes: {question.optionTwo.votes.length} ({secondVotePercentage})
+              </p>
+            )}
+          </div>
         </button>
       </div>
     </div>
