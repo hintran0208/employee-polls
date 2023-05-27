@@ -7,6 +7,7 @@ function users(state = {}, action) {
         ...state,
         ...action.users,
       };
+
     case ADD_NEW_ANSWER_USER:
       return {
         ...state,
@@ -18,6 +19,7 @@ function users(state = {}, action) {
           },
         },
       };
+
     case ADD_NEW_QUESTION_USER:
       return {
         ...state,
@@ -26,6 +28,7 @@ function users(state = {}, action) {
           questions: [action.id].concat(state[action.author].questions),
         },
       };
+
     default:
       return state;
   }

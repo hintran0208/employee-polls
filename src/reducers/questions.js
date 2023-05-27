@@ -7,6 +7,7 @@ function questions(state = {}, action) {
         ...state,
         ...action.questions,
       };
+
     case SAVE_ANSWER_VOTE:
       return {
         ...state,
@@ -18,6 +19,7 @@ function questions(state = {}, action) {
           },
         },
       };
+
     case ADD_NEW_QUESTION:
       return {
         ...state,
