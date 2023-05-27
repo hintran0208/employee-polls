@@ -1,24 +1,24 @@
-import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/react";
-import * as React from "react";
+import React from "react";
 import { Provider } from "react-redux";
-import Navbar from "../components/Navbar";
-import store from "../store";
+import { BrowserRouter } from "react-router-dom";
+import { store } from "../store";
+import NavBar from "./NavBar";
 
-describe("NavBar", () => {
-  test("should be rendered the page correctly", async () => {
-    render(
+describe("App", () => {
+  it("should render the app", () => {
+    const view = render(
       <Provider store={store}>
-        <Navbar />
+        <BrowserRouter>
+          <NavBar />
+        </BrowserRouter>
       </Provider>
     );
 
-    const homePageLink = screen.getByText(/home/i);
-    const newPollLink = screen.getByText(/new/i);
-    const leaderboardLink = screen.getByText(/leaderboard/i);
+    expect(view).toBeDefined();
+    expect(view).toMatchSnapshot();
 
+    const homePageLink = screen.getByText(/Home/i);
     expect(homePageLink).toBeInTheDocument();
-    expect(newPollLink).toBeInTheDocument();
-    expect(leaderboardLink).toBeInTheDocument();
   });
 });
