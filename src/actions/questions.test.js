@@ -8,19 +8,19 @@ import {
 } from "./questions";
 
 describe("addQuestion()", () => {
-  it("create a new action " + ADD_NEW_QUESTION, () => {
+  it("should be created add new question action" + ADD_NEW_QUESTION, () => {
     const question = { question: "question" };
-    const expectation = {
+    const result = {
       type: ADD_NEW_QUESTION,
       question,
     };
 
-    expect(addQuestion(question)).toEqual(expectation);
+    expect(addQuestion(question)).toEqual(result);
   });
 });
 
 describe("receiveQuestions()", () => {
-  it("create a new action " + RECEIVE_QUESTIONS, () => {
+  it("should be created receive question action" + RECEIVE_QUESTIONS, () => {
     const questions = {
       "8xf0y6ziyjabvozdd253nd": {
         id: "8xf0y6ziyjabvozdd253nd",
@@ -36,27 +36,27 @@ describe("receiveQuestions()", () => {
         },
       },
     };
-    const expectation = {
+    const result = {
       type: RECEIVE_QUESTIONS,
       questions,
     };
 
-    expect(receiveQuestions(questions)).toEqual(expectation);
+    expect(receiveQuestions(questions)).toEqual(result);
   });
 });
 
 describe("saveAnswerVote()", () => {
-  it("create a new action " + SAVE_ANSWER_VOTE, () => {
+  it("should be created save answer question action" + SAVE_ANSWER_VOTE, () => {
     const author = "sarahedo";
     const qid = "8xf0y6ziyjabvozdd253nd";
     const answer = "optionTwo";
-    const expectation = {
+    const result = {
       type: SAVE_ANSWER_VOTE,
       author,
       qid,
       answer,
     };
 
-    expect(saveAnswerVote(author, qid, answer)).toEqual(expectation);
+    expect(saveAnswerVote(author, qid, answer)).toEqual(result);
   });
 });

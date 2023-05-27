@@ -1,13 +1,13 @@
 import { setAuthenticatedUser, SET_AUTHENTICATED_USER } from "./authenUser";
 
 describe("setAuthenticatedUser", () => {
-  it("create a new action" + SET_AUTHENTICATED_USER, () => {
+  it("should be created set authenticated user action" + SET_AUTHENTICATED_USER, () => {
     const userId = "user_id";
-    const expectation = {
+    const result = {
       type: SET_AUTHENTICATED_USER,
       userId,
     };
 
-    expect(setAuthenticatedUser(userId)).toEqual(expectation);
+    expect(setAuthenticatedUser(userId)).toEqual(result);
   });
 });
